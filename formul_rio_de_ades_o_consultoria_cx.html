@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulário de Adesão - Consultoria CX</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --primary-dark: #0f2c23;
+            --accent-gold: #c5a059;
+            --bg-light: #f8fafc;
+            --text-dark: #1e293b;
+            --border-color: #cbd5e1;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Open Sans', sans-serif;
+            background-color: #475569;
+            color: var(--text-dark);
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .action-bar {
+            width: 100%;
+            max-width: 800px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            background-color: #ffffff;
+            padding: 15px 25px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+
+        .action-bar h2 {
+            font-family: 'Montserrat', sans-serif;
+            font-size: 18px;
+            color: var(--primary-dark);
+        }
+
+        .btn-print {
+            background-color: var(--primary-dark);
+            color: #ffffff;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 14px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            transition: all 0.2s ease;
+        }
+
+        .btn-print:hover {
+            background-color: #164034;
+            transform: translateY(-1px);
+        }
+
+        .page-container {
+            width: 210mm;
+            min-height: 297mm;
+            background-color: #ffffff;
+            padding: 20mm;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+            border-radius: 2px;
+            position: relative;
+        }
+
+        .header-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 20px;
+        }
+
+        .header-logo {
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 800;
+            font-size: 22px;
+            color: var(--primary-dark);
+            letter-spacing: -0.5px;
+        }
+
+        .header-logo span {
+            color: var(--accent-gold);
+        }
+
+        .header-doc-title {
+            text-align: right;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 700;
+            font-size: 18px;
+            color: var(--primary-dark);
+            text-transform: uppercase;
+        }
+
+        .section-header {
+            background-color: var(--primary-dark);
+            color: #ffffff;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 13px;
+            font-weight: 700;
+            padding: 6px 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+            margin-top: 15px;
+            margin-bottom: 10px;
+            border-radius: 3px;
+        }
+
+        .form-grid {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 10px;
+        }
+
+        .form-grid td, .form-grid th {
+            border: 1px solid var(--border-color);
+            padding: 6px 10px;
+            font-size: 12px;
+            vertical-align: middle;
+        }
+
+        .form-grid th {
+            background-color: #f1f5f9;
+            font-family: 'Montserrat', sans-serif;
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--primary-dark);
+            text-align: left;
+        }
+
+        .label-cell {
+            font-weight: 600;
+            background-color: #f8fafc;
+            width: 25%;
+            color: #334155;
+        }
+
+        .static-cell {
+            color: #0f172a;
+            font-weight: 500;
+            background-color: #ffffff;
+        }
+
+        /* Editable inputs styled for client fields */
+        input[type="text"], input[type="email"], textarea {
+            width: 100%;
+            border: 1px dashed #cbd5e1;
+            padding: 4px 6px;
+            border-radius: 4px;
+            outline: none;
+            background: #fffdf5;
+            font-family: 'Open Sans', sans-serif;
+            font-size: 12px;
+            color: #0f172a;
+            transition: all 0.2s ease;
+        }
+
+        input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
+            background-color: #ffffff;
+            border: 1px solid var(--accent-gold);
+            box-shadow: 0 0 0 2px rgba(197, 160, 89, 0.2);
+        }
+
+        textarea {
+            resize: vertical;
+            min-height: 40px;
+        }
+
+        .highlight-row {
+            background-color: #fffdf5;
+        }
+
+        .terms-box {
+            font-size: 10.5px;
+            line-height: 1.45;
+            color: #475569;
+            text-align: justify;
+            margin-top: 10px;
+            padding: 12px;
+            border: 1px solid var(--border-color);
+            background-color: #f8fafc;
+            border-radius: 4px;
+        }
+
+        .terms-box p {
+            margin-bottom: 8px;
+        }
+
+        .terms-box p:last-child {
+            margin-bottom: 0;
+        }
+
+        .acceptance-box {
+            margin-top: 15px;
+            padding: 10px 12px;
+            background-color: #fffdf5;
+            border: 1px solid var(--accent-gold);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 11px;
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        .acceptance-box input[type="checkbox"] {
+            width: 16px;
+            height: 16px;
+            cursor: pointer;
+            accent-color: var(--primary-dark);
+        }
+
+        .signature-container {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 30px;
+        }
+
+        .signature-block {
+            width: 45%;
+            text-align: center;
+        }
+
+        .signature-line {
+            border-top: 1px solid #1e293b;
+            margin-bottom: 6px;
+        }
+
+        .signature-title {
+            font-size: 11px;
+            font-weight: 700;
+            color: var(--primary-dark);
+        }
+
+        .signature-sub {
+            font-size: 10px;
+            color: #64748b;
+        }
+
+        @media print {
+            body {
+                background-color: #ffffff;
+                padding: 0;
+            }
+
+            .action-bar {
+                display: none;
+            }
+
+            .page-container {
+                box-shadow: none;
+                padding: 10mm 15mm;
+                width: 100%;
+            }
+
+            input[type="text"], input[type="email"], textarea {
+                border: none !important;
+                background: transparent !important;
+                padding: 0 !important;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="action-bar">
+        <h2><i class="fa-solid fa-file-signature"></i> Formulário de Adesão - Prestação de Serviços de Consultoria</h2>
+        <button class="btn-print" onclick="window.print()">
+            <i class="fa-solid fa-file-pdf"></i> Exportar / Salvar em PDF
+        </button>
+    </div>
+
+    <div class="page-container">
+        
+        <!-- Header -->
+        <table class="header-table">
+            <tr>
+                <td class="header-logo">CX <span>CULTURE</span></td>
+                <td class="header-doc-title">Formulário de Adesão<br><span style="font-size: 11px; font-weight: 500; color: #64748b;">Prestação de Serviços de Consultoria</span></td>
+            </tr>
+        </table>
+
+        <!-- Section 1: Contratante (Editable for Client) -->
+        <div class="section-header">1. Dados da Contratante (Cliente - Preenchimento Editável)</div>
+        <table class="form-grid">
+            <tr>
+                <td class="label-cell">Nome Completo:</td>
+                <td colspan="3"><input type="text" value="" placeholder="Nome completo do(a) contratante"></td>
+            </tr>
+            <tr>
+                <td class="label-cell">CPF:</td>
+                <td><input type="text" value="" placeholder="000.000.000-00"></td>
+                <td class="label-cell">Telefone / WhatsApp:</td>
+                <td><input type="text" value="" placeholder="(00) 00000-0000"></td>
+            </tr>
+            <tr>
+                <td class="label-cell">E-mail Principal:</td>
+                <td colspan="3"><input type="email" value="" placeholder="email@exemplo.com.br"></td>
+            </tr>
+            <tr>
+                <td class="label-cell">Endereço Residencial/Profissional:</td>
+                <td colspan="3"><input type="text" value="" placeholder="Endereço completo (Rua, Nº, Bairro, Cidade - UF, CEP)"></td>
+            </tr>
+        </table>
+
+        <!-- Section 2: Contratado (Fixed Consultant Data) -->
+        <div class="section-header">2. Dados do Consultor (Contratado - Fixo)</div>
+        <table class="form-grid">
+            <tr>
+                <td class="label-cell">Nome do Consultor:</td>
+                <td colspan="3" class="static-cell">Arthur Santos de Paula</td>
+            </tr>
+            <tr>
+                <td class="label-cell">CPF do Consultor:</td>
+                <td class="static-cell">109.708.026-92</td>
+                <td class="label-cell">E-mail:</td>
+                <td class="static-cell">consultoria@cxculture.com</td>
+            </tr>
+            <tr>
+                <td class="label-cell">Endereço Residencial:</td>
+                <td colspan="3" class="static-cell">R Oitis, 249 - Jardim Montanhês, Ibirité - MG, CEP: 32410-348</td>
+            </tr>
+            <tr>
+                <td class="label-cell">Dados de Pagamento:</td>
+                <td colspan="3" class="static-cell">Chave Pix: <strong>3876fef2-aceb-4e90-a82d-6248f78e2698</strong></td>
+            </tr>
+        </table>
+
+        <!-- Section 3: Serviços e Condições (Fixed Terms) -->
+        <div class="section-header">3. Serviços Subscritos e Condições Comerciais</div>
+        <table class="form-grid">
+            <thead>
+                <tr>
+                    <th style="width: 45%;">Serviço Subscrito</th>
+                    <th style="width: 20%;">Duração</th>
+                    <th style="width: 35%;">Condições de Pagamento</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr class="highlight-row">
+                    <td>
+                        <strong>Consultoria de Arquitetura de CX, Processos & Escala</strong><br>
+                        <span style="font-size: 11px; color: #64748b;">(Engenharia de Jornada, Mapeamento por Dados, Central de Ajuda, Comunidade e Playbooks Vendas/CSM)</span>
+                    </td>
+                    <td><strong>8 Semanas</strong><br><span style="font-size: 10px; color: #64748b;">(Início: 14/09/2026)</span></td>
+                    <td>
+                        <strong>Valor Total: R$ 2.800,00</strong><br>
+                        • Entrada: R$ 1.000,00 (no ato)<br>
+                        • 2ª Parcela: R$ 900,00 (30 dias)<br>
+                        • 3ª Parcela: R$ 900,00 (60 dias)
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <!-- Section 4: Mentoria de Continuidade -->
+        <div class="section-header">4. Acompanhamento Opcional (Pós-Consultoria)</div>
+        <table class="form-grid">
+            <tr>
+                <td class="label-cell">Mentoria Recorrente:</td>
+                <td class="static-cell"><strong>R$ 450,00 / mês</strong> (Plano Trimestral com 2 encontros virtuais mensais de 1 hora)</td>
+            </tr>
+            <tr>
+                <td class="label-cell">Ativação:</td>
+                <td class="static-cell">Adesão opcional a ser confirmada ao término do ciclo inicial de 8 semanas.</td>
+            </tr>
+        </table>
+
+        <!-- Section 5: Condições Gerais e Regras da Consultoria (Equilibradas) -->
+        <div class="section-header">5. Princípios de Parceria e Regras da Consultoria</div>
+        <div class="terms-box">
+            <p><strong>1. Natureza da Consultoria e Escopo:</strong> O CONSULTOR compromete-se a entregar a arquitetura estratégica, mapeamento de processos, manuais operacionais e orientações técnicas especificadas. A implementação prática das rotinas e a condução diária do atendimento cabem à CONTRATANTE e sua equipe.</p>
+            <p><strong>2. Flexibilidade e Ajustes de Pagamento:</strong> Prezamos por um relacionamento de confiança e parceria. Caso haja necessidade imprevisível de alterar o dia de vencimento das parcelas, a CONTRATANTE poderá solicitar o ajuste com simples aviso prévio de até 3 dias. Atrasos sem justificativa ou aviso prévio superiores a 10 dias autorizam a suspensão temporária dos encontros e entregas até a regularização do débito.</p>
+            <p><strong>3. Regras de Cancelamento e Rescisão Equilibrada:</strong> 
+            <br>• <em>Cancelamento antes do início (Kick-off):</em> Ocorrendo a desistência antes do início dos trabalhos, será devolvido 80% do valor pago na entrada, retendo-se 20% a título de taxa administrativa e reserva de agenda.
+            <br>• <em>Cancelamento durante a consultoria:</em> Caso a CONTRATANTE opte por interromper o projeto no decorrer do ciclo de 8 semanas, será devido o valor proporcional às semanas de trabalho já realizadas, mantendo-se a retenção do valor de entrada. Todos os materiais e manuais já entregues permanecem sob posse da CONTRATANTE.</p>
+            <p><strong>4. Propriedade Intelectual e Sigilo Profissional:</strong> Todos os manuais, roteiros e materiais criados passam a ser de uso exclusivo e definitivo da CONTRATANTE após a quitação do projeto. Ambas as partes garantem o sigilo absoluto sobre informações comerciais, operacionais e estratégicas compartilhadas.</p>
+            <p><strong>5. Validade do Documento:</strong> As partes reconhecem a plena eficácia e validade jurídica deste formulário preenchido e assinado eletronicamente.</p>
+        </div>
+
+        <!-- Acceptance Checkbox -->
+        <div class="acceptance-box">
+            <input type="checkbox" id="accept-terms" checked>
+            <label for="accept-terms">Declaro que li, compreendi e aceito os termos, prazos e condições comerciais descritas neste Formulário de Adesão.</label>
+        </div>
+
+        <!-- Section 6: Assinaturas -->
+        <div class="signature-container">
+            <div class="signature-block">
+                <div class="signature-line"></div>
+                <div class="signature-title"><input type="text" value="" placeholder="NOME DO(A) CONTRATANTE" style="text-align: center; font-weight: 700; border: none; background: transparent;"></div>
+                <div class="signature-sub">Contratante</div>
+            </div>
+            <div class="signature-block">
+                <div class="signature-line"></div>
+                <div class="signature-title">ARTHUR SANTOS DE PAULA</div>
+                <div class="signature-sub">Consultor / Contratado (CPF: 109.708.026-92)</div>
+            </div>
+        </div>
+
+    </div>
+
+</body>
+</html>
