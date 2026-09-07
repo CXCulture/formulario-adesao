@@ -3,420 +3,356 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Formulário de Adesão - Consultoria CX</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700;800&family=Open+Sans:wght@400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>Formulário de Adesão - Consultoria de CX & Processos</title>
     <style>
         :root {
-            --primary-dark: #0f2c23;
-            --accent-gold: #c5a059;
-            --bg-light: #f8fafc;
-            --text-dark: #1e293b;
-            --border-color: #cbd5e1;
-        }
-
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
+            --primary: #1e293b;
+            --accent: #2563eb;
+            --bg: #f8fafc;
+            --card-bg: #ffffff;
+            --border: #e2e8f0;
+            --text: #0f172a;
+            --text-light: #64748b;
         }
 
         body {
-            font-family: 'Open Sans', sans-serif;
-            background-color: #475569;
-            color: var(--text-dark);
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif;
+            background-color: var(--bg);
+            color: var(--text);
+            line-height: 1.6;
+            margin: 0;
             padding: 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
         }
 
-        .action-bar {
+        /* Modal de Senha */
+        #password-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
             width: 100%;
-            max-width: 800px;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.85);
             display: flex;
-            justify-content: space-between;
+            justify-content: center;
             align-items: center;
-            background-color: #ffffff;
-            padding: 15px 25px;
-            border-radius: 8px;
-            margin-bottom: 20px;
-            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 9999;
+            backdrop-filter: blur(4px);
         }
 
-        .action-bar h2 {
-            font-family: 'Montserrat', sans-serif;
-            font-size: 18px;
-            color: var(--primary-dark);
+        .modal-content {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 12px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.2);
+            text-align: center;
+            max-width: 400px;
+            width: 90%;
         }
 
-        .btn-print {
-            background-color: var(--primary-dark);
-            color: #ffffff;
-            border: none;
-            padding: 10px 20px;
+        .modal-content h3 {
+            margin-top: 0;
+            color: var(--primary);
+        }
+
+        .modal-content input {
+            width: 80%;
+            padding: 10px;
+            margin: 15px 0;
+            border: 1px solid var(--border);
             border-radius: 6px;
-            font-weight: 600;
-            font-size: 14px;
-            cursor: pointer;
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            transition: all 0.2s ease;
-        }
-
-        .btn-print:hover {
-            background-color: #164034;
-            transform: translateY(-1px);
-        }
-
-        .page-container {
-            width: 210mm;
-            min-height: 297mm;
-            background-color: #ffffff;
-            padding: 20mm;
-            box-shadow: 0 10px 25px rgba(0,0,0,0.25);
-            border-radius: 2px;
-            position: relative;
-        }
-
-        .header-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 20px;
-        }
-
-        .header-logo {
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 800;
-            font-size: 22px;
-            color: var(--primary-dark);
-            letter-spacing: -0.5px;
-        }
-
-        .header-logo span {
-            color: var(--accent-gold);
-        }
-
-        .header-doc-title {
-            text-align: right;
-            font-family: 'Montserrat', sans-serif;
-            font-weight: 700;
-            font-size: 18px;
-            color: var(--primary-dark);
-            text-transform: uppercase;
-        }
-
-        .section-header {
-            background-color: var(--primary-dark);
-            color: #ffffff;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 13px;
-            font-weight: 700;
-            padding: 6px 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-            margin-top: 15px;
-            margin-bottom: 10px;
-            border-radius: 3px;
-        }
-
-        .form-grid {
-            width: 100%;
-            border-collapse: collapse;
-            margin-bottom: 10px;
-        }
-
-        .form-grid td, .form-grid th {
-            border: 1px solid var(--border-color);
-            padding: 6px 10px;
-            font-size: 12px;
-            vertical-align: middle;
-        }
-
-        .form-grid th {
-            background-color: #f1f5f9;
-            font-family: 'Montserrat', sans-serif;
-            font-size: 11px;
-            font-weight: 700;
-            color: var(--primary-dark);
-            text-align: left;
-        }
-
-        .label-cell {
-            font-weight: 600;
-            background-color: #f8fafc;
-            width: 25%;
-            color: #334155;
-        }
-
-        .static-cell {
-            color: #0f172a;
-            font-weight: 500;
-            background-color: #ffffff;
-        }
-
-        /* Editable inputs styled for client fields */
-        input[type="text"], input[type="email"], textarea {
-            width: 100%;
-            border: 1px dashed #cbd5e1;
-            padding: 4px 6px;
-            border-radius: 4px;
-            outline: none;
-            background: #fffdf5;
-            font-family: 'Open Sans', sans-serif;
-            font-size: 12px;
-            color: #0f172a;
-            transition: all 0.2s ease;
-        }
-
-        input[type="text"]:focus, input[type="email"]:focus, textarea:focus {
-            background-color: #ffffff;
-            border: 1px solid var(--accent-gold);
-            box-shadow: 0 0 0 2px rgba(197, 160, 89, 0.2);
-        }
-
-        textarea {
-            resize: vertical;
-            min-height: 40px;
-        }
-
-        .highlight-row {
-            background-color: #fffdf5;
-        }
-
-        .terms-box {
-            font-size: 10.5px;
-            line-height: 1.45;
-            color: #475569;
-            text-align: justify;
-            margin-top: 10px;
-            padding: 12px;
-            border: 1px solid var(--border-color);
-            background-color: #f8fafc;
-            border-radius: 4px;
-        }
-
-        .terms-box p {
-            margin-bottom: 8px;
-        }
-
-        .terms-box p:last-child {
-            margin-bottom: 0;
-        }
-
-        .acceptance-box {
-            margin-top: 15px;
-            padding: 10px 12px;
-            background-color: #fffdf5;
-            border: 1px solid var(--accent-gold);
-            border-radius: 4px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 11px;
-            font-weight: 600;
-            color: var(--primary-dark);
-        }
-
-        .acceptance-box input[type="checkbox"] {
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-            accent-color: var(--primary-dark);
-        }
-
-        .signature-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 30px;
-        }
-
-        .signature-block {
-            width: 45%;
+            font-size: 1rem;
             text-align: center;
         }
 
-        .signature-line {
-            border-top: 1px solid #1e293b;
-            margin-bottom: 6px;
+        .modal-content button {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-weight: 600;
         }
 
-        .signature-title {
-            font-size: 11px;
+        #protected-content {
+            display: none; /* Oculto até a verificação */
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            padding: 40px;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            border: 1px solid var(--border);
+        }
+
+        .header {
+            text-align: center;
+            border-bottom: 2px solid var(--border);
+            padding-bottom: 20px;
+            margin-bottom: 30px;
+        }
+
+        .header h1 {
+            color: var(--primary);
+            font-size: 1.6rem;
+            margin: 0 0 5px 0;
+        }
+
+        .header p {
+            color: var(--text-light);
+            margin: 0;
+            font-size: 0.95rem;
+        }
+
+        .section-title {
             font-weight: 700;
-            color: var(--primary-dark);
+            color: var(--primary);
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 5px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.5px;
         }
 
-        .signature-sub {
-            font-size: 10px;
-            color: #64748b;
+        .grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+
+        .field {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .field-full {
+            grid-column: span 2;
+        }
+
+        label {
+            font-size: 0.8rem;
+            font-weight: 600;
+            color: var(--text-light);
+            margin-bottom: 4px;
+        }
+
+        input[type="text"], input[type="email"], input[type="tel"] {
+            padding: 10px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.95rem;
+            background-color: #fafafa;
+        }
+
+        input:focus {
+            outline: none;
+            border-color: var(--accent);
+            background-color: #fff;
+        }
+
+        .static-data {
+            background-color: #f1f5f9;
+            padding: 12px;
+            border-radius: 6px;
+            font-size: 0.9rem;
+            color: var(--primary);
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-top: 10px;
+        }
+
+        th, td {
+            border: 1px solid var(--border);
+            padding: 10px;
+            text-align: left;
+            font-size: 0.85rem;
+        }
+
+        th {
+            background-color: #f1f5f9;
+            color: var(--primary);
+        }
+
+        .terms {
+            background-color: #f8fafc;
+            border: 1px solid var(--border);
+            padding: 15px;
+            border-radius: 6px;
+            font-size: 0.82rem;
+            color: var(--text);
+        }
+
+        .terms ol {
+            margin: 0;
+            padding-left: 20px;
+        }
+
+        .terms li {
+            margin-bottom: 8px;
+        }
+
+        .checkbox-container {
+            margin-top: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-size: 0.9rem;
+            font-weight: 600;
+        }
+
+        .actions {
+            margin-top: 30px;
+            text-align: center;
+        }
+
+        .btn-print {
+            background-color: var(--accent);
+            color: white;
+            border: none;
+            padding: 12px 30px;
+            font-size: 1rem;
+            font-weight: 600;
+            border-radius: 6px;
+            cursor: pointer;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.1);
         }
 
         @media print {
-            body {
-                background-color: #ffffff;
-                padding: 0;
-            }
-
-            .action-bar {
-                display: none;
-            }
-
-            .page-container {
-                box-shadow: none;
-                padding: 10mm 15mm;
-                width: 100%;
-            }
-
-            input[type="text"], input[type="email"], textarea {
-                border: none !important;
-                background: transparent !important;
-                padding: 0 !important;
-            }
+            body { background: white; padding: 0; }
+            #protected-content { box-shadow: none; border: none; padding: 0; }
+            .actions, #password-modal { display: none !important; }
+            input { border: none !important; background: transparent !important; padding: 0 !important; }
         }
     </style>
 </head>
 <body>
 
-    <div class="action-bar">
-        <h2><i class="fa-solid fa-file-signature"></i> Formulário de Adesão - Prestação de Serviços de Consultoria</h2>
-        <button class="btn-print" onclick="window.print()">
-            <i class="fa-solid fa-file-pdf"></i> Exportar / Salvar em PDF
-        </button>
+    <!-- MODAL DE SEGURANÇA -->
+    <div id="password-modal">
+        <div class="modal-content">
+            <h3>Acesso Restrito</h3>
+            <p>Digite a senha fornecida para acessar o formulário:</p>
+            <input type="password" id="pass-input" placeholder="Senha de Acesso">
+            <br>
+            <button onclick="checkPassword()">Acessar Documento</button>
+            <p id="error-msg" style="color: red; display: none; font-size: 0.8rem; margin-top: 10px;">Senha incorreta!</p>
+        </div>
     </div>
 
-    <div class="page-container">
-        
-        <!-- Header -->
-        <table class="header-table">
-            <tr>
-                <td class="header-logo">CX <span>CULTURE</span></td>
-                <td class="header-doc-title">Formulário de Adesão<br><span style="font-size: 11px; font-weight: 500; color: #64748b;">Prestação de Serviços de Consultoria</span></td>
-            </tr>
-        </table>
+    <!-- CONTEÚDO DO FORMULÁRIO -->
+    <div id="protected-content">
+        <div class="header">
+            <h1>FORMULÁRIO DE ADESÃO DE SERVIÇOS</h1>
+            <p>Consultoria de Engenharia de Processos & Arquitetura de CX</p>
+        </div>
 
-        <!-- Section 1: Contratante (Editable for Client) -->
-        <div class="section-header">1. Dados da Contratante (Cliente - Preenchimento Editável)</div>
-        <table class="form-grid">
-            <tr>
-                <td class="label-cell">Nome Completo:</td>
-                <td colspan="3"><input type="text" value="" placeholder="Nome completo do(a) contratante"></td>
-            </tr>
-            <tr>
-                <td class="label-cell">CPF:</td>
-                <td><input type="text" value="" placeholder="000.000.000-00"></td>
-                <td class="label-cell">Telefone / WhatsApp:</td>
-                <td><input type="text" value="" placeholder="(00) 00000-0000"></td>
-            </tr>
-            <tr>
-                <td class="label-cell">E-mail Principal:</td>
-                <td colspan="3"><input type="email" value="" placeholder="email@exemplo.com.br"></td>
-            </tr>
-            <tr>
-                <td class="label-cell">Endereço Residencial/Profissional:</td>
-                <td colspan="3"><input type="text" value="" placeholder="Endereço completo (Rua, Nº, Bairro, Cidade - UF, CEP)"></td>
-            </tr>
-        </table>
+        <div class="section-title">1. Dados do Contratado (Consultor)</div>
+        <div class="static-data">
+            <strong>Nome:</strong> Arthur Santos de Paula<br>
+            <strong>CPF:</strong> 109.708.026.92<br>
+            <strong>Endereço:</strong> R Oitis, 249 - Jardim Montanhês, Ibirité - MG | CEP: 32410-348<br>
+            <strong>Chave Pix para Pagamento:</strong> 3876fef2-aceb-4e90-a82d-6248f78e2698
+        </div>
 
-        <!-- Section 2: Contratado (Fixed Consultant Data) -->
-        <div class="section-header">2. Dados do Consultor (Contratado - Fixo)</div>
-        <table class="form-grid">
-            <tr>
-                <td class="label-cell">Nome do Consultor:</td>
-                <td colspan="3" class="static-cell">Arthur Santos de Paula</td>
-            </tr>
-            <tr>
-                <td class="label-cell">CPF do Consultor:</td>
-                <td class="static-cell">109.708.026-92</td>
-                <td class="label-cell">E-mail:</td>
-                <td class="static-cell">consultoria@cxculture.com</td>
-            </tr>
-            <tr>
-                <td class="label-cell">Endereço Residencial:</td>
-                <td colspan="3" class="static-cell">R Oitis, 249 - Jardim Montanhês, Ibirité - MG, CEP: 32410-348</td>
-            </tr>
-            <tr>
-                <td class="label-cell">Dados de Pagamento:</td>
-                <td colspan="3" class="static-cell">Chave Pix: <strong>3876fef2-aceb-4e90-a82d-6248f78e2698</strong></td>
-            </tr>
-        </table>
+        <div class="section-title">2. Dados do Contratante (Cliente)</div>
+        <form id="client-form">
+            <div class="grid">
+                <div class="field field-full">
+                    <label>Nome Completo / Razão Social *</label>
+                    <input type="text" placeholder="Digite o nome completo" required>
+                </div>
+                <div class="field">
+                    <label>CPF / CNPJ *</label>
+                    <input type="text" placeholder="000.000.000-00" required>
+                </div>
+                <div class="field">
+                    <label>E-mail *</label>
+                    <input type="email" placeholder="seuemail@dominio.com" required>
+                </div>
+                <div class="field">
+                    <label>Telefone / WhatsApp *</label>
+                    <input type="tel" placeholder="(00) 00000-0000" required>
+                </div>
+                <div class="field">
+                    <label>Endereço Profissional / Residencial</label>
+                    <input type="text" placeholder="Rua, número, bairro, cidade-UF">
+                </div>
+            </div>
+        </form>
 
-        <!-- Section 3: Serviços e Condições (Fixed Terms) -->
-        <div class="section-header">3. Serviços Subscritos e Condições Comerciais</div>
-        <table class="form-grid">
+        <div class="section-title">3. Resumo dos Serviços e Investimento</div>
+        <table>
             <thead>
                 <tr>
-                    <th style="width: 45%;">Serviço Subscrito</th>
-                    <th style="width: 20%;">Duração</th>
-                    <th style="width: 35%;">Condições de Pagamento</th>
+                    <th>Descrição do Serviço</th>
+                    <th>Duração</th>
+                    <th>Forma de Pagamento</th>
+                    <th>Valor Total</th>
                 </tr>
             </thead>
             <tbody>
-                <tr class="highlight-row">
+                <tr>
                     <td>
-                        <strong>Consultoria de Arquitetura de CX, Processos & Escala</strong><br>
-                        <span style="font-size: 11px; color: #64748b;">(Engenharia de Jornada, Mapeamento por Dados, Central de Ajuda, Comunidade e Playbooks Vendas/CSM)</span>
+                        <strong>Consultoria de CX & Arquitetura de Processos</strong><br>
+                        • Mapeamento de jornadas e touchpoints<br>
+                        • Especificação para app/automações e IA<br>
+                        • Construção de Playbooks e materiais de apoio
                     </td>
-                    <td><strong>8 Semanas</strong><br><span style="font-size: 10px; color: #64748b;">(Início: 14/09/2026)</span></td>
+                    <td>8 Semanas</td>
                     <td>
-                        <strong>Valor Total: R$ 2.800,00</strong><br>
-                        • Entrada: R$ 1.000,00 (no ato)<br>
-                        • 2ª Parcela: R$ 900,00 (30 dias)<br>
-                        • 3ª Parcela: R$ 900,00 (60 dias)
+                        • Entrada (no ato): R$ 1.000,00<br>
+                        • 2ª Parcela (30 dias): R$ 900,00<br>
+                        • 3ª Parcela (60 dias): R$ 900,00
                     </td>
+                    <td><strong>R$ 2.800,00</strong></td>
                 </tr>
             </tbody>
         </table>
 
-        <!-- Section 4: Mentoria de Continuidade -->
-        <div class="section-header">4. Acompanhamento Opcional (Pós-Consultoria)</div>
-        <table class="form-grid">
-            <tr>
-                <td class="label-cell">Mentoria Recorrente:</td>
-                <td class="static-cell"><strong>R$ 450,00 / mês</strong> (Plano Trimestral com 2 encontros virtuais mensais de 1 hora)</td>
-            </tr>
-            <tr>
-                <td class="label-cell">Ativação:</td>
-                <td class="static-cell">Adesão opcional a ser confirmada ao término do ciclo inicial de 8 semanas.</td>
-            </tr>
-        </table>
-
-        <!-- Section 5: Condições Gerais e Regras da Consultoria (Equilibradas) -->
-        <div class="section-header">5. Princípios de Parceria e Regras da Consultoria</div>
-        <div class="terms-box">
-            <p><strong>1. Natureza da Consultoria e Escopo:</strong> O CONSULTOR compromete-se a entregar a arquitetura estratégica, mapeamento de processos, manuais operacionais e orientações técnicas especificadas. A implementação prática das rotinas e a condução diária do atendimento cabem à CONTRATANTE e sua equipe.</p>
-            <p><strong>2. Flexibilidade e Ajustes de Pagamento:</strong> Prezamos por um relacionamento de confiança e parceria. Caso haja necessidade imprevisível de alterar o dia de vencimento das parcelas, a CONTRATANTE poderá solicitar o ajuste com simples aviso prévio de até 3 dias. Atrasos sem justificativa ou aviso prévio superiores a 10 dias autorizam a suspensão temporária dos encontros e entregas até a regularização do débito.</p>
-            <p><strong>3. Regras de Cancelamento e Rescisão Equilibrada:</strong> 
-            <br>• <em>Cancelamento antes do início (Kick-off):</em> Ocorrendo a desistência antes do início dos trabalhos, será devolvido 80% do valor pago na entrada, retendo-se 20% a título de taxa administrativa e reserva de agenda.
-            <br>• <em>Cancelamento durante a consultoria:</em> Caso a CONTRATANTE opte por interromper o projeto no decorrer do ciclo de 8 semanas, será devido o valor proporcional às semanas de trabalho já realizadas, mantendo-se a retenção do valor de entrada. Todos os materiais e manuais já entregues permanecem sob posse da CONTRATANTE.</p>
-            <p><strong>4. Propriedade Intelectual e Sigilo Profissional:</strong> Todos os manuais, roteiros e materiais criados passam a ser de uso exclusivo e definitivo da CONTRATANTE após a quitação do projeto. Ambas as partes garantem o sigilo absoluto sobre informações comerciais, operacionais e estratégicas compartilhadas.</p>
-            <p><strong>5. Validade do Documento:</strong> As partes reconhecem a plena eficácia e validade jurídica deste formulário preenchido e assinado eletronicamente.</p>
+        <div class="section-title">4. Condições Gerais e Alinhamento</div>
+        <div class="terms">
+            <ol>
+                <li><strong>Início dos Trabalhos:</strong> O cronograma do projeto terá início formal na data pactuada entre as partes, mediante a confirmação da assinatura e do pagamento da entrada.</li>
+                <li><strong>Autonomia da Prestação de Serviços:</strong> O Contratado atua com total autonomia técnica, não existindo qualquer vínculo empregatício ou de subordinação entre as partes. O trabalho constitui obrigação de meio, visando fornecer a arquitetura operacional e os materiais combinados.</li>
+                <li><strong>Sigilo e Confidencialidade:</strong> Todas as informações de negócio, dados operacionais e materiais compartilhados durante a consultoria serão mantidos sob estrito sigilo.</li>
+                <li><strong>Ajustes e Flexibilidade:</strong> Eventuais imprevistos nas datas de pagamento informados previamente serão tratados com transparência e diálogo. Atrasos não comunicados superiores a 10 dias autorizam a pausa temporária nas entregas até a regularização.</li>
+                <li><strong>Cancelamento Equilibrado:</strong> Em caso de desistência antes do início, haverá devolução de 80% do valor de entrada (20% retidos para custos de reserva de agenda). Se cancelado durante a execução, serão devidos os valores proporcionais às semanas já realizadas.</li>
+            </ol>
         </div>
 
-        <!-- Acceptance Checkbox -->
-        <div class="acceptance-box">
-            <input type="checkbox" id="accept-terms" checked>
-            <label for="accept-terms">Declaro que li, compreendi e aceito os termos, prazos e condições comerciais descritas neste Formulário de Adesão.</label>
+        <div class="checkbox-container">
+            <input type="checkbox" id="accept" required>
+            <label for="accept">Declaro que li, compreendi e aceito integralmente os termos deste formulário de adesão.</label>
         </div>
 
-        <!-- Section 6: Assinaturas -->
-        <div class="signature-container">
-            <div class="signature-block">
-                <div class="signature-line"></div>
-                <div class="signature-title"><input type="text" value="" placeholder="NOME DO(A) CONTRATANTE" style="text-align: center; font-weight: 700; border: none; background: transparent;"></div>
-                <div class="signature-sub">Contratante</div>
-            </div>
-            <div class="signature-block">
-                <div class="signature-line"></div>
-                <div class="signature-title">ARTHUR SANTOS DE PAULA</div>
-                <div class="signature-sub">Consultor / Contratado (CPF: 109.708.026-92)</div>
-            </div>
+        <div class="actions">
+            <button type="button" class="btn-print" onclick="window.print()">Exportar / Salvar como PDF</button>
         </div>
-
     </div>
 
+    <script>
+        function checkPassword() {
+            const input = document.getElementById('pass-input').value;
+            // Senha definida: marcelle2026
+            if (input === 'marcelle2026') {
+                document.getElementById('password-modal').style.display = 'none';
+                document.getElementById('protected-content').style.display = 'block';
+            } else {
+                document.getElementById('error-msg').style.display = 'block';
+            }
+        }
+
+        // Permite pressionar Enter no campo de senha
+        document.getElementById('pass-input').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') {
+                checkPassword();
+            }
+        });
+    </script>
 </body>
 </html>
